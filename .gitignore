@@ -8,7 +8,7 @@
 # NPM files.
 node_modules
 
-# Next.js files.
+# Node.js & Next.js files.
 .next
 .env
 
