@@ -1,20 +1,22 @@
 import Koa from "koa";
+import bodyParser from "koa-bodyparser";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 import indexRouter from "routes";
-import healthRouter from "routes/Health";
-import mongoose from "mongoose";
-import { UserModel } from "models/User";
+import testRouter from "routes/Test";
 
 dotenv.config();
 
 const app = new Koa();
 const port = 4000;
 
+app.use(bodyParser());
+
 app.use(indexRouter.routes());
 app.use(indexRouter.allowedMethods());
-app.use(healthRouter.routes());
-app.use(healthRouter.allowedMethods());
+app.use(testRouter.routes());
+app.use(testRouter.allowedMethods());
 
 (async () => {
   const dbURL = process.env.MONGODB_URL;
