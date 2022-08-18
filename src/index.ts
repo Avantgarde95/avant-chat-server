@@ -1,22 +1,30 @@
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
+import passport from "koa-passport";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-import indexRouter from "routes";
-import testRouter from "routes/Test";
+import { httpErrorHandler } from "common/Middlewares";
+import { localStrategy } from "user/Passport";
+import healthRouter from "health/routers/HealthRouter";
+import authRouter from "user/routers/AuthRouter";
 
 dotenv.config();
 
 const app = new Koa();
 const port = 4000;
 
+app.use(httpErrorHandler);
+
 app.use(bodyParser());
 
-app.use(indexRouter.routes());
-app.use(indexRouter.allowedMethods());
-app.use(testRouter.routes());
-app.use(testRouter.allowedMethods());
+app.use(passport.initialize());
+passport.use(localStrategy);
+
+app.use(healthRouter.routes());
+app.use(healthRouter.allowedMethods());
+app.use(authRouter.routes());
+app.use(authRouter.allowedMethods());
 
 (async () => {
   const dbURL = process.env.MONGODB_URL;

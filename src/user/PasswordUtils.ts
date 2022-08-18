@@ -13,26 +13,30 @@ function generateSalt() {
 export async function generatePasswordHash(
   password: string,
   getSalt: () => string = generateSalt
-): Promise<{ passwordHash: string; salt: string }> {
+): Promise<{ passwordHash: string; passwordSalt: string }> {
   return new Promise((resolve, reject) => {
-    const salt = getSalt();
+    const passwordSalt = getSalt();
 
-    crypto.pbkdf2(password, salt, iterationCount, passwordSize, hashMethod, (error, result) => {
+    crypto.pbkdf2(password, passwordSalt, iterationCount, passwordSize, hashMethod, (error, result) => {
       if (error !== null) {
         reject(error);
       } else {
         resolve({
           passwordHash: result.toString(encodingMethod),
-          salt,
+          passwordSalt,
         });
       }
     });
   });
 }
 
-export async function verifyPassword(otherPassword: string, passwordHash: string, salt: string): Promise<boolean> {
+export async function verifyPassword(
+  otherPassword: string,
+  passwordHash: string,
+  passwordSalt: string
+): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    crypto.pbkdf2(otherPassword, salt, iterationCount, passwordSize, hashMethod, (error, result) => {
+    crypto.pbkdf2(otherPassword, passwordSalt, iterationCount, passwordSize, hashMethod, (error, result) => {
       if (error !== null) {
         reject(error);
       } else {
