@@ -27,6 +27,7 @@ app.use(authRouter.routes());
 app.use(authRouter.allowedMethods());
 
 (async () => {
+  console.log("Server start!");
   const dbURL = process.env.MONGODB_URL;
 
   if (typeof dbURL === "undefined") {
@@ -34,6 +35,7 @@ app.use(authRouter.allowedMethods());
   }
 
   await mongoose.connect(dbURL, { dbName: "avant-chat" });
+  console.log("Connected to the database!");
 
   app.listen(port, () => {
     console.log(`Listening to port ${port}...`);
