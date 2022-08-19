@@ -1,8 +1,11 @@
 import { Context, Next } from "koa";
 
-import { HTTPError } from "common/Errors";
+import { HTTPError } from "utils/Errors";
 
-export async function httpErrorHandler(ctx: Context, next: Next) {
+/**
+ * Catch some errors and send the information to the client.
+ */
+export default async function catchHTTPError(ctx: Context, next: Next) {
   try {
     await next();
   } catch (error) {

@@ -1,4 +1,4 @@
-import { generatePasswordHash, verifyPassword } from "user/PasswordUtils";
+import { generatePasswordHash, verifyPassword } from "utils/PasswordUtils";
 
 test("Generate password hash", async () => {
   const { passwordHash, passwordSalt } = await generatePasswordHash("hello", () => "abc");

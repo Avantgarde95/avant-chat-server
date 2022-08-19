@@ -1066,7 +1066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:*":
+"@types/jsonwebtoken@npm:*, @types/jsonwebtoken@npm:^8.5.8":
   version: 8.5.8
   resolution: "@types/jsonwebtoken@npm:8.5.8"
   dependencies:
@@ -4990,6 +4990,7 @@ __metadata:
   dependencies:
     "@typegoose/typegoose": ^9.11.0
     "@types/jest": ^28.1.6
+    "@types/jsonwebtoken": ^8.5.8
     "@types/koa": ^2.13.5
     "@types/koa-bodyparser": ^4.3.7
     "@types/koa-passport": ^4.0.3

@@ -1,15 +1,14 @@
-import passport from "koa-passport";
 import { IStrategyOptions, Strategy as LocalStrategy, VerifyFunction } from "passport-local";
 
-import { UserModel } from "user/models/User";
-import { verifyPassword } from "user/PasswordUtils";
+import UserModel from "models/UserModel";
+import { verifyPassword } from "utils/PasswordUtils";
 
-const localOptions: IStrategyOptions = {
+const options: IStrategyOptions = {
   usernameField: "username",
   passwordField: "password",
 };
 
-const verifyLocal: VerifyFunction = async (username, password, done) => {
+const verify: VerifyFunction = async (username, password, done) => {
   const user = await UserModel.findByUsername(username);
 
   // Check existence.
@@ -27,4 +26,4 @@ const verifyLocal: VerifyFunction = async (username, password, done) => {
   done(null, user);
 };
 
-export const localStrategy = new LocalStrategy(localOptions, verifyLocal);
+export default new LocalStrategy(options, verify);
